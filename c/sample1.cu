@@ -38,15 +38,19 @@ int main(int argc, char**argv){
   /* transfer from host to device */
   cudaMemcpy(d_InA, h_InA, sizeof(float)*SIZE, cudaMemcpyHostToDevice);
   cudaMemcpy(d_InB, h_InB, sizeof(float)*SIZE, cudaMemcpyHostToDevice);
+  cudaMemcpy(d_Out, h_Out, sizeof(float)*SIZE, cudaMemcpyHostToDevice);
 
-  /* call kernel functions */
-  arrayadd<<< 1,1 >>> (d_Out,d_InA, d_InB);    
+  /* call kernel functions, specify grid and block as <<< grid, block >>> */
+  arrayadd<<< 16,16 >>> (d_Out,d_InA, d_InB);    
 
+  //cudaDeviceSynchronize();
+ 
   /* transfer from device to host */
   cudaMemcpy(h_Out, d_Out, sizeof(float)*SIZE, cudaMemcpyDeviceToHost);
  
   /* confirm */
   printf("Out: "); for(i=0;i<SIZE;i++) printf(" %.2f",h_Out[i]); printf("\n");
+  
   return 0;
 }
 
