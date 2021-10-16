@@ -11,6 +11,8 @@ Download this.
 
 [Sample in Fortran](./fortran/README.md)
 
+[Sample in Fortran with MPI](./fortran_mpi/README.md)
+
 
 # Refererences
 - [CfCA GPU trial](https://www.cfca.nao.ac.jp/gpgpu)

@@ -35,7 +35,7 @@ program main
   nprocs_w=2
   call InitiaizeMPI
 
-  write(fileout,"(a8,i3.3,a7)") "sample1-",myid_w,".gpulog"
+  write(fileout,"(a8,i3.3,a7)") "sample1-",myid_w,".cpulog"
   open (unit=unitout,file=fileout,status='replace',form='formatted')
   write(unitout,*) "CPU:\n"
 
