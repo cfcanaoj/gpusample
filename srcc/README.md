@@ -4,7 +4,7 @@
 
 
 	module load cuda-toolkit
-	make
+	make all
 	./sample1_gpu.exe
 
 
