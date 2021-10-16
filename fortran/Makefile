@@ -1,4 +1,4 @@
-NVCC=nvfortran
+NVFC=nvfortran
 
 ################
 # phony
@@ -14,8 +14,8 @@ clean:
 ################
 # sample1
 ################
-sample1.cpux: sample1.f90
-	$(NVCC) $< -o $@
+sample1.cpux: sample1_cpu.f90
+	$(NVFC) $< -o $@
 
-sample1.gpux: sample1.cu
-	$(NVCC) $< -o $@
+sample1.gpux: sample1_gpu.f90
+	$(NVFC) $< -o $@
