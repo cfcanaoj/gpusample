@@ -1,9 +1,10 @@
 program main
+  implicit none
   integer, parameter:: SIZE=256
   integer:: i
   real(4),dimension(SIZE):: h_InA,h_InB,h_Out
   integer,dimension(2) :: seed
-  
+  real(8)::rnum
   write(6,*) "CPU:\n"
 
   seed(1)=1
