@@ -9,3 +9,6 @@
 
 
 
+# References
+
+-[1](https://www.cc.u-tokyo.ac.jp/public/VOL12/No2/201003gpgpu.pdf)
