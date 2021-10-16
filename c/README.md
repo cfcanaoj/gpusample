@@ -3,7 +3,7 @@
 ## Sample1
 How to complie and run the sample codes.
 
-	cd srcc
+	cd c
 	module load cuda-toolkit
 	make
 	./sample1_cpu.exe > sample1.cpulog
