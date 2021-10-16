@@ -9,7 +9,7 @@ exes = sample1.cpux sample1.gpux
 all: $(exes)
 
 clean:
-	rm *~ *.o *.gpux *.cpux
+	rm *~ *.o *.mod *.gpux *.cpux 
 
 ################
 # sample1
