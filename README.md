@@ -5,5 +5,7 @@ Download this.
 	git clone git@github.com:takiwaki/gpusample gpusample
 
 
-[Sample in C](./srcc/README.md)
+[Sample in C](./c/README.md)
+
+[Sample in C++](./cpp/README.md)
 
