@@ -3,6 +3,7 @@
 ## Sample1
 
 
+	cd srcc
 	module load cuda-toolkit
 	make all
 	./sample1_gpu.exe
