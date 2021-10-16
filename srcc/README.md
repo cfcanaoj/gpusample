@@ -1,8 +1,11 @@
-# GPU
+# Sample code for GPU computing 
 
-# test
+## Sample1
 
 
 	module load cuda-toolkit
 	make
+	./sample1_gpu.exe
+
+
 
