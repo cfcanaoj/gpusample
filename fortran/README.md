@@ -4,7 +4,7 @@
 How to complie and run the sample codes.
 
 	cd cpp
-	module load cuda-toolkit
+	module load nvhpc
 	make
 	./sample1_cpu.exe > sample1.cpulog
 	qsub pbs_sample1.sh

@@ -1,4 +1,4 @@
-NVCC=nvcc
+NVCC=nvfortran
 
 ################
 # phony
@@ -14,7 +14,7 @@ clean:
 ################
 # sample1
 ################
-sample1.cpux: sample1.cpp
+sample1.cpux: sample1.f90
 	$(NVCC) $< -o $@
 
 sample1.gpux: sample1.cu
