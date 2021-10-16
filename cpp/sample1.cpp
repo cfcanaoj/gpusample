@@ -1,5 +1,5 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include <iostream>
+#include <cstdlib>
 
 #define SIZE 256
 
