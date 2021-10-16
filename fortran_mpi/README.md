@@ -7,6 +7,7 @@ How to complie and run the sample codes.
 	module load nvhpc
 	make
 	qsub pbs_sample1_cpu.sh
+	qsub pbs_sample1_gpu.sh
 	cat sample1-*.cpulog
 	cat sample1-*.gpulog
 	
