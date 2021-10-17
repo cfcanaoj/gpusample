@@ -1,6 +1,7 @@
 # Samples for GPU computing in CfCA
-Download this.
+Download this at the login node of CfCA server.
 
+	ssh <username>@g00.cfca.nao.ac.jp
 	cd /gwork0/<username>
 	git clone git@github.com:takiwaki/gpusample gpusample
 
