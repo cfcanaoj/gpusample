@@ -26,6 +26,11 @@ program main
   integer,dimension(2) :: seed
   real(8) rnum
   integer :: istat
+  type(dim3) :: dimGrid,dimBlock
+  integer,parameter :: Nthread=512
+  dimGrid = dim3(SIZE/Nthread,1,1)
+  dimBlock = dim3(Nthread,1,1)
+  
   write(6,*) "GPU:\n"
 
   seed(1)=1
@@ -59,7 +64,7 @@ program main
   
   call cpu_time(tbgn)
   do n=1, nite
-     call arrayadd <<< 16,16 >>> (d_Out, d_InA, d_InB)
+     call arrayadd <<< dimGrid,dimBlock >>> (d_Out, d_InA, d_InB)
   enddo
   call cpu_time(tend)
   istat= cudaMemcpy(h_Out, d_Out, SIZE)! attributes are specified in the declaration
