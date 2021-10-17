@@ -6,3 +6,4 @@
 module load cuda-toolkit
 cd $PBS_O_WORKDIR
 ./sample1.gpux > sample1.gpulog
+./sample1.cpux > sample1.cpulog
