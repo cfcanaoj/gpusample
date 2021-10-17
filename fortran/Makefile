@@ -16,17 +16,17 @@ dataclean:
 ################
 # sample1
 ################
-sample1.cpux: sample1_cpu.f90
+sample1.cpux: sample1.f90
 	$(NVFC) $< -o $@
 
-sample1.gpux: sample1_gpu.f90
+sample1.gpux: sample1.cuf
 	$(NVFC) -Mcuda  $< -o $@
 
 ################
 # sample2
 ################
-sample2.cpux: sample2_cpu.f90
+sample2.cpux: sample2.f90
 	$(NVFC) $< -o $@
 
-sample2.gpux: sample2_gpu.f90
+sample2.gpux: sample2.cuf
 	$(NVFC) -Mcuda  $< -o $@
