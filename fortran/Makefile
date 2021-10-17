@@ -20,7 +20,7 @@ sample1.cpux: sample1.f90
 	$(NVFC) $< -o $@
 
 sample1.gpux: sample1.cuf
-	$(NVFC) -Mcuda  $< -o $@
+	$(NVFC) $< -o $@
 
 ################
 # sample2
@@ -29,4 +29,4 @@ sample2.cpux: sample2.f90
 	$(NVFC) $< -o $@
 
 sample2.gpux: sample2.cuf
-	$(NVFC) -Mcuda  $< -o $@
+	$(NVFC) $< -o $@
