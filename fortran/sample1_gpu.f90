@@ -26,6 +26,8 @@ program main
   seed(1)=1
   seed(2)=1
   call random_seed(PUT=seed(1:2))
+
+  istat= cudaSetDevice(0)
   
   do i=1, SIZE
      call random_number(rnum)
