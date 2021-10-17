@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-#define SIZE 1024
+#define SIZE (2048*512)
 
 /* define kernel functions */
 __global__ void arrayadd(float *fOut, float *fInA, float *fInB){
@@ -16,7 +16,9 @@ int main(int argc, char**argv){
   const int ishow=256;
   int n;
   const int nite=1000;
-  
+
+  dim3 grid(SIZE/512,1), block(512,1);
+
   printf("GPU:\n");
   srand(0);
 
@@ -48,9 +50,10 @@ int main(int argc, char**argv){
   cudaMemcpy(d_InB, h_InB, sizeof(float)*SIZE, cudaMemcpyHostToDevice);
   cudaMemcpy(d_Out, h_Out, sizeof(float)*SIZE, cudaMemcpyHostToDevice);
 
+  cudaDeviceSynchronize();
   for(n=0;n<nite;n++){
   /* call kernel functions, specify grid and block as <<< grid, block >>> */
-     arrayadd<<< 16,16 >>> (d_Out,d_InA, d_InB);
+     arrayadd<<< grid,block >>> (d_Out,d_InA, d_InB);
   } 
 
   cudaDeviceSynchronize(); 

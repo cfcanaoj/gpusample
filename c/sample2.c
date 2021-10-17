@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-#define SIZE 1024
+#define SIZE (2048*512)
 
 int main(int argc, char**argv){
   clock_t start,stop;
