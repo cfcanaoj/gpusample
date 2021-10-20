@@ -184,7 +184,7 @@ subroutine OutputData
   implicit none
   integer:: i,j
   integer,parameter:: unitout=102
-  character*50,parameter:: fileout="xy-gp.dat"
+  character*50,parameter:: fileout="xy-gpu.dat"
   
   open(unit=unitout,file=fileout,status='replace',form='formatted')
   do j=1, nx2    

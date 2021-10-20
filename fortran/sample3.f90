@@ -11,8 +11,8 @@ module grids
   data x2max / 1.0d0/
 
   integer,parameter:: margin=1
-  integer,parameter:: nx1=32
-  integer,parameter:: nx2=32
+  integer,parameter:: nx1=256
+  integer,parameter:: nx2=256
 
   real(8):: dx1
   real(8),dimension(nx1+1):: x1a
@@ -139,7 +139,7 @@ subroutine OutputData
   implicit none
   integer:: i,j
   integer,parameter:: unitout=102
-  character*50,parameter:: fileout="xy-gp.dat"
+  character*50,parameter:: fileout="xy-cpu.dat"
   
   open(unit=unitout,file=fileout,status='replace',form='formatted')
   do j=1, nx2    
