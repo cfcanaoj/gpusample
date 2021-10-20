@@ -47,6 +47,14 @@ How to complie and run the sample codes is shown as follows.
 	cat sample3.cpulog
 	cat sample3.gpulog
 	
+Check the graviatational potential by gnuplot. Follow the instruction in analyis serever.
+	
+	cd /gwork0/<username>/gpusample/fortran
+	gnuplot
+	plot "xy-gpu.dat" u 1:2:4 w l
+	plot "xy-cpu.dat" u 1:2:4 w l
+	
+
 # References
 - [青山龍美, GPU チュートリアル CUDA篇](https://hpc-phys.kek.jp/workshop/workshop181201.html)
 - [implicit_none, CUDA Fortran入門](https://qiita.com/implicit_none/items/8229d1931cd236d62ca9)
