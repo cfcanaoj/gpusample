@@ -52,7 +52,7 @@ program main
   
   istat= cudaMemcpy(d_InA, h_InA, SIZE)! attributes are specified in the declaration
   istat= cudaMemcpy(d_InB, h_InB, SIZE)! attributes are specified in the declaration
-
+  ! 16*16=256=SIZE
   call arrayadd <<< 16,16 >>> (d_Out, d_InA, d_InB)
   istat= cudaMemcpy(h_Out, d_Out, SIZE)! attributes are specified in the declaration
  

@@ -11,8 +11,8 @@ module grids
   data x2max / 1.0d0/
 
   integer,parameter:: margin=1
-  integer,parameter:: nx1=256
-  integer,parameter:: nx2=256
+  integer,parameter:: nx1=1024
+  integer,parameter:: nx2=1024
 
   real(8):: dx1
   real(8),dimension(nx1+1):: x1a
@@ -36,7 +36,7 @@ end module grids
 program main
   implicit none
   real(4)::tbgn,tend
-
+  write(6,*) "CPU:\n"
   call InitializeVariables
   call SetupGrids
   call SetupDensity

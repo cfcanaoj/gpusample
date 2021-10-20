@@ -5,5 +5,5 @@
 #PBS -l select=1:ngpus=1:ncpus=1
 module load nvhpc
 cd $PBS_O_WORKDIR
-./sample2.gpux > sample3.gpulog
-./sample2.cpux > sample3.cpulog
+./sample3.gpux > sample3.gpulog
+./sample3.cpux > sample3.cpulog

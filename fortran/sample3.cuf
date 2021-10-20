@@ -1,17 +1,31 @@
 module cuda_kernel
   use cudafor
 contains
+  attributes(global) subroutine justcopy(to,from,imax,jmax)
+    implicit none
+    real(8),dimension(imax,jmax),device:: to
+    real(8),dimension(imax,jmax),device:: from
+    integer,value::imax,jmax
+    integer:: i,j
+    i = threadIdx%x + blockDim%x * (blockIdx%x-1)
+    j = threadIdx%y + blockDim%y * (blockIdx%y-1)
+    if (   (i>=1) .and. (i<=imax)  &
+   & .and. (j>=1) .and. (j<=jmax) )& 
+   & to(i,j) = from(i,j)
+    
+  end subroutine justcopy
+  
   attributes(global) subroutine jacobi2D(gpnxtd,gpd,rhod,a1,a2,a3,c,imax,jmax)
     implicit none
     real(8),dimension(:,:),device,intent(out):: gpnxtd
     real(8),dimension(:,:),device:: gpd,rhod
-    real(8),value:: a1,a2,a3,c
-    integer,value::imax,jmax
+    real(8),value,intent(in):: a1,a2,a3,c
+    integer,value,intent(in)::imax,jmax
     integer::i,j
     i = threadIdx%x + blockDim%x * (blockIdx%x-1)
     j = threadIdx%y + blockDim%y * (blockIdx%y-1)
-    if ( (i<=1) .or. (i>=imax) .or.    & 
-   &     (j<=1) .or. (j>=jmax) )then
+    if (  (i<=1) .or. (i>=imax) &
+   & .or. (j<=1) .or. (j>=jmax) )then
        
        return
     endif
@@ -24,10 +38,10 @@ contains
 
   attributes(global) subroutine copygp(gp_to,gp_from,persymx1,persymx2,imax,jmax)
     implicit none
-    real(8),dimension(:,:),device,intent(out):: gp_to
-    real(8),dimension(:,:),device,intent(in):: gp_from
-    real(8),value:: persymx1,persymx2
-    integer,value:: imax,jmax
+    real(8),dimension(imax,jmax),device,intent(out):: gp_to
+    real(8),dimension(imax,jmax),device,intent(in):: gp_from
+    real(8),value,intent(in):: persymx1,persymx2
+    integer,value,intent(in):: imax,jmax
     integer::i,j
     i = threadIdx%x + blockDim%x * (blockIdx%x-1)
     j = threadIdx%y + blockDim%y * (blockIdx%y-1)
@@ -38,13 +52,13 @@ contains
     endif
     
     if     ( i ==    1 ) then 
-       gp_to(i,j) = persymx1*gp_from(imax,j)
+       gp_to(i,j) = persymx1*gp_from(imax-1,j)
     else if( i == imax ) then
-       gp_to(i,j) = persymx1*gp_from(   1,j)
+       gp_to(i,j) = persymx1*gp_from(     2,j)
     else if( j ==    1 ) then
-       gp_to(i,j) = persymx2*gp_from(i,jmax)
+       gp_to(i,j) = persymx2*gp_from(i,jmax-1)
     else if( j == jmax ) then
-       gp_to(i,j) = persymx2*gp_from(i,   1)
+       gp_to(i,j) = persymx2*gp_from(i,     2)
     else
        gp_to(i,j) = gp_from(i,j)
     endif
@@ -67,8 +81,8 @@ module grids
   data x2max / 1.0d0/
 
   integer,parameter:: margin=1
-  integer,parameter:: nx1=256
-  integer,parameter:: nx2=256
+  integer,parameter:: nx1=1024
+  integer,parameter:: nx2=1024
 
   real(8):: dx1
   real(8),dimension(nx1+1):: x1a
@@ -92,7 +106,7 @@ end module grids
 program main
   implicit none
   real(4)::tbgn,tend
-
+  write(6,*) "GPU:\n"
   call InitializeVariables
   call SetupGrids
   call SetupDensity
@@ -154,26 +168,47 @@ end subroutine SetupDensity
 subroutine GetGravitationalPotential
   use grids
   use cuda_kernel
+  use cudafor
   implicit none
-  type(dim3) :: dimGrid,dimBlock
-  integer,parameter :: Nthread=512
-  real(8),dimension(nx1,nx2),device:: gpnxt
+  real(8),dimension(nx1,nx2),device:: gpnxtd
   real(8),dimension(nx1,nx2),device:: gpd,rhod
   real(8):: a1,a2,a3,c
   integer:: i,j,n
   integer:: istat
+  integer,parameter :: Nthread=32
+  type(dim3) :: dimGrid,dimBlock
+  
   a1 = 1.0d0/dx1**2
   a2 = 1.0d0/dx2**2
   a3 = 2.0d0*(a1+a2)
   c  = 4.0d0*pi*Ggra
+  
+  dimGrid =  dim3(nx1/Nthread,nx2/Nthread,1) ! 4*256=1024(nx1)
+  dimBlock = dim3(Nthread,Nthread,1)
+  write(6,*) "Grid  contains", dimGrid%x,"x", dimGrid%y,"blocks "
+  write(6,*) "Block contains",dimBlock%x,"x",dimBlock%y,"threads"
+
   istat= cudaMemcpy( gpd , gp, nx1*nx2)! attributes are specified in the declaration
   istat= cudaMemcpy(rhod, rho, nx1*nx2)! attributes are specified in the declaration
-  dimGrid =  dim3(16,1,1)
-  dimBlock = dim3(16,1,1)
+  istat= cudaDeviceSynchronize()
+  
+!  write(6,*) "test, justcopy"
+!  call justcopy <<< dimGrid,dimBlock >>> (gpnxtd,rhod,nx1,nx2)
+!  istat= cudaDeviceSynchronize()
+!  if(istat/= cudaSuccess) print *, trim(cudaGetErrorString(istat))
+!  istat= cudaMemcpy( gp, gpnxtd, nx1*nx2)
+!  if(istat/= cudaSuccess) print *, trim(cudaGetErrorString(istat))
+!  write(6,*) "gp",gp(2:6,2:6)
+!  write(6,*) "ro",rho(2:6,2:6)
+!  write(6,*) "test end"
+
   do n=1,itemax
-     call jacobi2D <<< dimGrid,dimBlock >>> (gpnxt,gpd,rhod,a1,a2,a3,c,nx1,nx2)
-     call   copygp <<< dimGrid,dimBlock >>> (gpd,gpnxt,persymx1,persymx2,nx1,nx2)
+     call jacobi2D <<< dimGrid,dimBlock >>> (gpnxtd,gpd,rhod,a1,a2,a3,c,nx1,nx2)
+     istat= cudaDeviceSynchronize()  
+     call   copygp <<< dimGrid,dimBlock >>> (gpd,gpnxtd,persymx1,persymx2,nx1,nx2)
+     istat= cudaDeviceSynchronize()
   enddo
+  istat= cudaDeviceSynchronize()
   istat= cudaMemcpy(gp, gpd, nx1*nx2)! attributes are specified in the declaration
    
   return

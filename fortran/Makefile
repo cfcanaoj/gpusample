@@ -1,4 +1,5 @@
 NVFC=nvfortran
+NVFCOPT=
 
 ################
 # phony
@@ -40,5 +41,5 @@ sample3.cpux: sample3.f90
 	$(NVFC) $< -o $@
 
 sample3.gpux: sample3.cuf
-	$(NVFC) $< -o $@
+	$(NVFC) $(NVFCOPT) $< -o $@
 
