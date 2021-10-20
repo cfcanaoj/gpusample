@@ -1,0 +1,199 @@
+module cuda_kernel
+  use cudafor
+contains
+  attributes(global) subroutine jacobi2D(gpnxtd,gpd,rhod,a1,a2,a3,c,imax,jmax)
+    implicit none
+    real(8),dimension(:,:),device,intent(out):: gpnxtd
+    real(8),dimension(:,:),device:: gpd,rhod
+    real(8),value:: a1,a2,a3,c
+    integer,value::imax,jmax
+    integer::i,j
+    i = threadIdx%x + blockDim%x * (blockIdx%x-1)
+    j = threadIdx%y + blockDim%y * (blockIdx%y-1)
+    if ( (i<=1) .or. (i>=imax) .or.    & 
+   &     (j<=1) .or. (j>=jmax) )then
+       
+       return
+    endif
+    gpnxtd(i,j) = ( a1*(gpd(i+1,j)+gpd(i-1,j)) &
+   &               +a2*(gpd(i,j+1)+gpd(i,j-1)) &
+   &                              -c*rhod(i,j) &
+   &              )/a3
+    return
+  end subroutine jacobi2D
+
+  attributes(global) subroutine copygp(gp_to,gp_from,persymx1,persymx2,imax,jmax)
+    implicit none
+    real(8),dimension(:,:),device,intent(out):: gp_to
+    real(8),dimension(:,:),device,intent(in):: gp_from
+    real(8),value:: persymx1,persymx2
+    integer,value:: imax,jmax
+    integer::i,j
+    i = threadIdx%x + blockDim%x * (blockIdx%x-1)
+    j = threadIdx%y + blockDim%y * (blockIdx%y-1)
+
+    if ( (i<=1) .or. (i>=imax) .or.    & 
+   &     (j<=1) .or. (j>=jmax) )then       
+       return
+    endif
+    
+    if     ( i ==    1 ) then 
+       gp_to(i,j) = persymx1*gp_from(imax,j)
+    else if( i == imax ) then
+       gp_to(i,j) = persymx1*gp_from(   1,j)
+    else if( j ==    1 ) then
+       gp_to(i,j) = persymx2*gp_from(i,jmax)
+    else if( j == jmax ) then
+       gp_to(i,j) = persymx2*gp_from(i,   1)
+    else
+       gp_to(i,j) = gp_from(i,j)
+    endif
+    
+    return
+  end subroutine copygp
+
+end module cuda_kernel
+
+module grids
+  implicit none
+  real(8),parameter:: Ggra=1.0d0
+  real(8),parameter:: rho0=1.0d0
+  real(8):: pi
+  real(8):: x1min,x1max
+  real(8):: x2min,x2max
+  data x1min / 0.0d0/
+  data x1max / 1.0d0/  
+  data x2min / 0.0d0/
+  data x2max / 1.0d0/
+
+  integer,parameter:: margin=1
+  integer,parameter:: nx1=256
+  integer,parameter:: nx2=256
+
+  real(8):: dx1
+  real(8),dimension(nx1+1):: x1a
+  real(8),dimension(nx1):: x1b,dvl1a
+  
+  real(8):: dx2
+  real(8),dimension(nx2+1):: x2a
+  real(8),dimension(nx2):: x2b,dvl2a
+  
+  real(8),dimension(nx1,nx2):: rho,gp
+  
+  integer,parameter:: l1=1
+  integer,parameter:: l2=1
+  real(8),parameter:: persymx1=-1.0
+  real(8),parameter:: persymx2=-1.0
+
+  integer,parameter:: itemax=300
+  
+end module grids
+
+program main
+  implicit none
+  real(4)::tbgn,tend
+
+  call InitializeVariables
+  call SetupGrids
+  call SetupDensity
+  call cpu_time(tbgn)
+  call GetGravitationalPotential
+  call cpu_time(tend)
+  call OutputData
+  write(6,"(a6,(1x,f10.2,a5))")"Time: ",(tend-tbgn)*1.0e3," [ms]"
+end program
+
+subroutine InitializeVariables
+  implicit none
+  
+  return
+end subroutine InitializeVariables
+
+subroutine SetupGrids
+  use grids
+  implicit none
+  integer:: i,j
+  dx1 =(x1max-x1min)/(nx1-margin*2)
+  x1a(1) = x1min -margin*dx1
+  do i=2, nx1+1
+     x1a(i) =x1a(i-1) + dx1
+  enddo
+  do i=1, nx1
+       x1b(i) = 0.5d0*(x1a(i) + x1a(i))
+     dvl1a(i) = dx1
+  enddo
+
+  dx2 =(x2max-x2min)/(nx2-margin*2)
+  x2a(1) =x2min -margin*dx2
+  do j=2, nx2+1
+     x2a(j) =x2a(j-1) + dx2
+  enddo
+  do j=1, nx2    
+       x2b(j) = 0.5d0*(x2a(j) + x2a(j))
+     dvl2a(j) = dx2
+  enddo
+
+  return
+end subroutine SetupGrids
+
+subroutine SetupDensity
+  use grids
+  implicit none
+  integer:: i,j
+  pi = acos(-1.0d0)
+  do j=1, nx2    
+  do i=1, nx1
+     rho(i,j) = rho0 * sin(l1*pi*x1b(i)/(x1max-x1min)) &
+    &                * sin(l2*pi*x2b(j)/(x2max-x2min))
+  enddo
+  enddo
+
+  return
+end subroutine SetupDensity
+
+subroutine GetGravitationalPotential
+  use grids
+  use cuda_kernel
+  implicit none
+  type(dim3) :: dimGrid,dimBlock
+  integer,parameter :: Nthread=512
+  real(8),dimension(nx1,nx2),device:: gpnxt
+  real(8),dimension(nx1,nx2),device:: gpd,rhod
+  real(8):: a1,a2,a3,c
+  integer:: i,j,n
+  integer:: istat
+  a1 = 1.0d0/dx1**2
+  a2 = 1.0d0/dx2**2
+  a3 = 2.0d0*(a1+a2)
+  c  = 4.0d0*pi*Ggra
+  istat= cudaMemcpy( gpd , gp, nx1*nx2)! attributes are specified in the declaration
+  istat= cudaMemcpy(rhod, rho, nx1*nx2)! attributes are specified in the declaration
+  dimGrid =  dim3(16,1,1)
+  dimBlock = dim3(16,1,1)
+  do n=1,itemax
+     call jacobi2D <<< dimGrid,dimBlock >>> (gpnxt,gpd,rhod,a1,a2,a3,c,nx1,nx2)
+     call   copygp <<< dimGrid,dimBlock >>> (gpd,gpnxt,persymx1,persymx2,nx1,nx2)
+  enddo
+  istat= cudaMemcpy(gp, gpd, nx1*nx2)! attributes are specified in the declaration
+   
+  return
+end subroutine GetGravitationalPotential
+
+subroutine OutputData
+  use grids
+  implicit none
+  integer:: i,j
+  integer,parameter:: unitout=102
+  character*50,parameter:: fileout="xy-gp.dat"
+  
+  open(unit=unitout,file=fileout,status='replace',form='formatted')
+  do j=1, nx2    
+  do i=1, nx1
+     write(unitout,"(1x,4(E15.6e3))") x1b(i), x2b(j),rho(i,j),gp(i,j)
+  enddo
+  write(unitout,*) ""
+  enddo
+  close(unitout)
+
+  return
+end subroutine OutputData
