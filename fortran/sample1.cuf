@@ -50,6 +50,7 @@ program main
   enddo
   write(6,*) ""
   
+  write(6,*) "Using 16x16 blocks and threads to calculate 256 compnents"
   istat= cudaMemcpy(d_InA, h_InA, SIZE)! attributes are specified in the declaration
   istat= cudaMemcpy(d_InB, h_InB, SIZE)! attributes are specified in the declaration
   ! 16*16=256=SIZE

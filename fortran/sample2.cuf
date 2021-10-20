@@ -61,11 +61,13 @@ program main
   istat= cudaMemcpy(d_InA, h_InA, SIZE)! attributes are specified in the declaration
   istat= cudaMemcpy(d_InB, h_InB, SIZE)! attributes are specified in the declaration
 
+  write(6,*) "Using ",dimGrid%x," blocks and ",dimBlock%x," threads for ",SIZE,"componets."
   
   call cpu_time(tbgn)
   do n=1, nite
      call arrayadd <<< dimGrid,dimBlock >>> (d_Out, d_InA, d_InB)
   enddo
+
   call cpu_time(tend)
   istat= cudaMemcpy(h_Out, d_Out, SIZE)! attributes are specified in the declaration
  
