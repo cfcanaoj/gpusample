@@ -10,7 +10,7 @@ C_i=A_i+B_i
 How to complie and run the sample codes.
 
 	cd cpp
-	module load cuda-toolkit
+	module load cuda-toolkit/11.0
 	make
 	./sample1_cpu.exe > sample1.cpulog
 	qsub pbs_sample1.sh
