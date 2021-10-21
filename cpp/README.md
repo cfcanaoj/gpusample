@@ -12,7 +12,6 @@ How to complie and run the sample codes.
 	cd cpp
 	module load cuda-toolkit/11.0
 	make
-	./sample1_cpu.exe > sample1.cpulog
 	qsub pbs_sample1.sh
 	cat sample1.cpulog
 	cat sample1.gpulog
@@ -20,3 +19,4 @@ How to complie and run the sample codes.
 # References
 
 -[大島聡史, これからの並列計算のためのGPGPU連載講座（II）](https://www.cc.u-tokyo.ac.jp/public/VOL12/No2/201003gpgpu.pdf)
+- [Manual of thrust](https://thrust.github.io/doc/structthrust_1_1plus.html)
