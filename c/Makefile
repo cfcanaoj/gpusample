@@ -7,6 +7,8 @@ NVCC=nvcc
 .PHONY: all clean dataclean
 exes  = sample1.cpux sample1.gpux
 exes += sample2.cpux sample2.gpux
+exes += sample3.cpux sample3.gpux
+
 all: $(exes)
 
 clean:
@@ -30,4 +32,13 @@ sample2.cpux: sample2.c
 	$(NVCC) $< -o $@
 
 sample2.gpux: sample2.cu
+	$(NVCC) $< -o $@
+
+################
+# sample3
+################
+sample3.cpux: sample3.c
+	$(NVCC) $< -o $@
+
+sample3.gpux: sample3.cu
 	$(NVCC) $< -o $@
