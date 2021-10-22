@@ -28,6 +28,31 @@ How to complie and run the sample codes.
 	cat sample2.cpulog
 	cat sample2.gpulog
 
+## Sample3
+This example shows how 2D array is treated. We solve 2D poission equation by Jacobi Method.  
+![\begin{align*}
+  \frac{\partial^2 \Phi}{\partial ^2x}
++\frac{\partial^2 \Phi}{\partial ^2y}
+=4\pi G \rho
+\end{align*}
+](https://render.githubusercontent.com/render/math?math=%5Cdisplaystyle+%5Cbegin%7Balign%2A%7D%0A++%5Cfrac%7B%5Cpartial%5E2+%5CPhi%7D%7B%5Cpartial+%5E2x%7D%0A%2B%5Cfrac%7B%5Cpartial%5E2+%5CPhi%7D%7B%5Cpartial+%5E2y%7D%0A%3D4%5Cpi+G+%5Crho%0A%5Cend%7Balign%2A%7D%0A)
+
+How to complie and run the sample codes is shown as follows.
+
+	cd cpp
+	module load cuda-toolkit
+	make
+	qsub pbs_sample3.sh
+	cat sample3.cpulog
+	cat sample3.gpulog
+	
+Check the graviatational potential by gnuplot. Follow the instruction in analyis serever.
+	
+	cd /gwork0/<username>/gpusample/c
+	gnuplot
+	plot "xy-gpu.dat" u 1:2:4 w l
+	plot "xy-cpu.dat" u 1:2:4 w l
+	
 
 # References
 
