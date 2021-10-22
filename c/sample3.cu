@@ -160,7 +160,7 @@ void GetGravitationalPotential(){
   a2 = 1.0e0/dx2/dx2;
   a3 = 2.0e0*(a1+a2);
   c  = 4.0e0*pi*Ggra;
-  cudaMalloc((void**)&gpnxtd, sizeof(float)*(nx1*nx2));
+  cudaMalloc((void**)&gpnxtd, sizeof(double)*(nx1*nx2));
   
   const int Nthread=32;
   dim3 grid(nx1/Nthread,nx2/Nthread,1), block(Nthread,Nthread,1);
