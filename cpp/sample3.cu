@@ -45,7 +45,7 @@ __global__ void copygp(double* gp_to,
   }else if (i==nx1-1) {
     gp_to[j*nx1+i] = persymx1*gp_from[j*nx1+1];
   }else if (j==0) {
-    gp_to[j*nx1+i] = persymx2*gp_from[(nx2-1)*nx1+i];
+    gp_to[j*nx1+i] = persymx2*gp_from[(nx2-2)*nx1+i];
   }else if (j==nx2-1) {
     gp_to[j*nx1+i] = persymx2*gp_from[    (1)*nx1+i];
   }else{
