@@ -49,7 +49,7 @@ How to complie and run the sample codes is shown as follows.
 	
 Check the graviatational potential by gnuplot. Follow the instruction in analyis serever.
 	
-	cd /gwork0/<username>/gpusample/fortran
+	cd /gwork0/<username>/gpusample/cpp
 	gnuplot
 	plot "xy-gpu.dat" u 1:2:4 w l
 	plot "xy-cpu.dat" u 1:2:4 w l
