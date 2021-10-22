@@ -59,3 +59,4 @@ Check the graviatational potential by gnuplot. Follow the instruction in analyis
 
 - [大島聡史, これからの並列計算のためのGPGPU連載講座（II）](https://www.cc.u-tokyo.ac.jp/public/VOL12/No2/201003gpgpu.pdf)
 - [Manual of thrust](https://thrust.github.io/doc/structthrust_1_1plus.html)
+- [how to cast a 2-dimensional thrust::device_vector<thrust::device_vector<int>> to raw pointer, stack overflow](https://stackoverflow.com/questions/38056472/how-to-cast-a-2-dimensional-thrustdevice-vectorthrustdevice-vectorint-to)
