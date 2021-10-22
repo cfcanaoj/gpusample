@@ -71,7 +71,7 @@ namespace grids{
   
   double dx2;
   thrust::host_vector<double>  x2a(nx2+1);
-  thrust::host_vector<double>  x2b(nx2),dvl2a(nx1);
+  thrust::host_vector<double>  x2b(nx2),dvl2a(nx2);
   
   thrust::  host_vector<double>   rho(nx1*nx2), gp(nx1*nx2);
   thrust::device_vector<double>  rhod(nx1*nx2),gpd(nx1*nx2);
