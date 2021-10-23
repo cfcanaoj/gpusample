@@ -6,10 +6,10 @@ Download this at the login node of CfCA server.
 	git clone git@github.com:cfcanaoj/gpusample gpusample
 	cd gpusample
 
-- [Sample in C](./c/README.md)
-- [Sample in C++](./cpp/README.md)
-- [Sample in Fortran](./fortran/README.md)
-- [Sample in Fortran with MPI](./fortran_mpi/README.md)
+- [Samples in C](./c/README.md)
+- [Samples in C++](./cpp/README.md)
+- [Samples in Fortran](./fortran/README.md)
+- [Samples in Fortran with MPI](./fortran_mpi/README.md)
 
 # Refererences
 - [CfCA GPU trial](https://www.cfca.nao.ac.jp/gpgpu)
