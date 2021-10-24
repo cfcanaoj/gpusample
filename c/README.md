@@ -54,7 +54,7 @@ In the method, the gravitational potential is obtained by the following iterativ
 
 How to compile and run the sample codes is shown as follows.
 
-	cd cpp
+	cd c
 	module load cuda-toolkit
 	make
 	qsub pbs_sample3.sh
@@ -69,5 +69,5 @@ Check the graviatational potential by gnuplot. Follow the instruction in analyis
 	plot "xy-cpu.dat" u 1:2:4 w l
 	
 
-# References
+### References
 - [青山龍美, GPU チュートリアル CUDA篇](https://hpc-phys.kek.jp/workshop/workshop181201.html)
