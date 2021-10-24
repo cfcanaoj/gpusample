@@ -75,7 +75,7 @@ Check the graviatational potential by gnuplot. Follow the instruction in analyis
 - [how to cast a 2-dimensional thrust::device_vector<thrust::device_vector<int>> to raw pointer, stack overflow](https://stackoverflow.com/questions/38056472/how-to-cast-a-2-dimensional-thrustdevice-vectorthrustdevice-vectorint-to)
 	
 ## Sample4
-This sumple shows how the summation of the all components are obtained.
+This example shows how the summation of the all components of a vector are obtained.
 How to complie and run the sample codes is shown as follows.
 
 	cd cpp
@@ -87,3 +87,5 @@ How to complie and run the sample codes is shown as follows.
 	
 ### References
 - [小川, CUDA Parallel Reduction](https://ipx.hatenablog.com/entry/2017/08/31/130102)
+- [gyu-don, CUDAでCUDAで配列の総和を求めてみた](https://qiita.com/gyu-don/items/ef8a128fa24f6bddd342)
+- [丸山直也, CUDAプログラムの最適化](http://gpu-computing.gsic.titech.ac.jp/Japanese/Lecture/2010-06-28/reduction.pdf)
