@@ -8,12 +8,15 @@ NVCC=nvcc
 exes  = sample1.cpux sample1.gpux 
 exes += sample2.cpux sample2.gpux 
 exes += sample3.cpux sample3.gpux 
+exes += sample4.cpux sample4.gpux 
+
 all: $(exes)
 
 clean:
 	rm *~ *.o *.gpux *.cpux
 dataclean:
 	rm job_sample*.o* job_sample*.e* sample*.gpulog  sample*.cpulog
+
 
 ################
 # sample1
@@ -41,3 +44,13 @@ sample3.cpux: sample3.cpp
 
 sample3.gpux: sample3.cu
 	$(NVCC) $< -o $@
+
+################
+# sample4
+################
+sample4.cpux: sample4.cpp
+	$(NVCC) $< -o $@
+
+sample4.gpux: sample4.cu
+	$(NVCC) $< -o $@
+
