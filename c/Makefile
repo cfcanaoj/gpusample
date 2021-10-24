@@ -8,6 +8,7 @@ NVCC=nvcc
 exes  = sample1.cpux sample1.gpux
 exes += sample2.cpux sample2.gpux
 exes += sample3.cpux sample3.gpux
+exes += sample4.cpux sample4.gpux
 
 all: $(exes)
 
@@ -41,4 +42,13 @@ sample3.cpux: sample3.c
 	$(NVCC) $< -o $@
 
 sample3.gpux: sample3.cu
+	$(NVCC) $< -o $@
+
+################
+# sample4
+################
+sample4.cpux: sample4.c
+	$(NVCC) $< -o $@
+
+sample4.gpux: sample4.cu
 	$(NVCC) $< -o $@
