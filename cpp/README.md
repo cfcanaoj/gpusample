@@ -82,7 +82,12 @@ Check the gravitational potential by gnuplot. Follow the instruction in the anal
 	
 ## Sample4
 This example shows how the summation of all components of a vector are obtained.
-
+	
+![\begin{align*}
+S=\sum_i^N a_i
+\end{align*}
+](https://render.githubusercontent.com/render/math?math=%5Cdisplaystyle+%5Cbegin%7Balign%2A%7D%0AS%3D%5Csum_i%5EN+a_i%0A%5Cend%7Balign%2A%7D%0A)
+	
 See the code for [CPU](./sample4.cpp) and [GPU](./sample4.cu). This code implementation is the simplest and slowest one, so if you want to use faster code, see the references.
 	
 How to compile and run the sample codes is shown as follows.
