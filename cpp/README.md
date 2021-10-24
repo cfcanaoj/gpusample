@@ -76,6 +76,7 @@ Check the gravitational potential by gnuplot. Follow the instruction in the anal
 	
 ## Sample4
 This example shows how the summation of all components of a vector are obtained.
+
 How to compile and run the sample codes is shown as follows.
 
 	cd cpp
