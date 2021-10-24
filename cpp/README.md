@@ -7,6 +7,8 @@ C_i=A_i+B_i
 \end{align*}
 ](https://render.githubusercontent.com/render/math?math=%5Clarge+%5Cdisplaystyle+%5Cbegin%7Balign%2A%7D%0AC_i%3DA_i%2BB_i%0A%5Cend%7Balign%2A%7D%0A%0A)
 
+See the code for [cpu](./sample1.cpp) and [gpu](./sample1.cu).
+
 How to compile and run the sample codes is shown as follows.
 
 	cd cpp
@@ -22,6 +24,8 @@ How to compile and run the sample codes is shown as follows.
 
 ## Sample2
 This example shows how GPU calculates fast. The calculation is basically the same as the sample1.
+
+See the code for [cpu](./sample2.cpp) and [gpu](./sample2.cu).
 
 How to compile and run the sample codes is shown as follows.
 
@@ -53,6 +57,8 @@ In the method, the gravitational potential is obtained by the following iterativ
 \end{align*}
 ](https://render.githubusercontent.com/render/math?math=%5Cdisplaystyle+%5Cbegin%7Balign%2A%7D%0A%5CPhi%5E%7Bn%2B1%7D_%7Bi%2Cj%7D%3D%0A%5Cleft%28%0A++%5CPhi%5E%7Bn%7D_%7Bi%2B1%2Cj%7D%2B%5CPhi%5E%7Bn%7D_%7Bi-1%2Cj%7D%0A%2B%5CPhi%5E%7Bn%7D_%7Bi%2Cj%2B1%7D%2B%5CPhi%5E%7Bn%7D_%7Bi%2Cj-1%7D%0A-4%5Cpi+G+%5Crho_%7Bi%2Cj%7Dh%5E2%0A%5Cright%29%2F4%0A%5Cend%7Balign%2A%7D%0A)
 
+See the code for [cpu](./sample3.cpp) and [gpu](./sample3.cu).
+
 How to compile and run the sample codes is shown as follows.
 
 	cd cpp
@@ -77,6 +83,8 @@ Check the gravitational potential by gnuplot. Follow the instruction in the anal
 ## Sample4
 This example shows how the summation of all components of a vector are obtained.
 
+See the code for [cpu](./sample4.cpp) and [gpu](./sample4.cu).
+	
 How to compile and run the sample codes is shown as follows.
 
 	cd cpp
