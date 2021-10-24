@@ -71,4 +71,19 @@ Check the graviatational potential by gnuplot. Follow the instruction in analyis
 	
 
 ### References
+- [青山龍美, GPU チュートリアル CUDA篇](https://hpc-phys.kek.jp/workshop/workshop181201.html)
 - [how to cast a 2-dimensional thrust::device_vector<thrust::device_vector<int>> to raw pointer, stack overflow](https://stackoverflow.com/questions/38056472/how-to-cast-a-2-dimensional-thrustdevice-vectorthrustdevice-vectorint-to)
+	
+## Sample4
+This sumple shows how the summation of the all components are obtained.
+How to complie and run the sample codes is shown as follows.
+
+	cd cpp
+	module load cuda-toolkit/11.0
+	make
+	qsub pbs_sample4.sh
+	cat sample4.cpulog
+	cat sample4.gpulog
+	
+### References
+- [小川, CUDA Parallel Reduction](https://ipx.hatenablog.com/entry/2017/08/31/130102)
