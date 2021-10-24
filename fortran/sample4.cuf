@@ -1,0 +1,102 @@
+module cuda_kernel
+  use cudafor
+contains
+  attributes(global) subroutine sum_wrong(g_x,g_o)
+    implicit none
+    real(8),dimension(:),device::g_x
+    real(8),dimension(:),device::g_o
+    integer::id
+    id = threadIdx%x + blockDim%x * (blockIdx%x-1)
+    g_o(1) = g_o(1)  + g_x(id)
+  end subroutine sum_wrong
+  
+  attributes(global) subroutine sum_correct(g_x,g_o,N)
+    implicit none
+    real(8),dimension(:),device::g_x
+    real(8),dimension(:),device::g_o
+    integer,value::N
+    real(8),dimension(N),shared::s_x
+    integer::i,tid,s
+    i = threadIdx%x + blockDim%x * (blockIdx%x-1)
+    tid = threadIdx%x
+    if(i<=N)then
+       s_x(tid) = g_x(i)
+    else
+       s_x(tid) = 0.0d0
+    endif
+    call syncthreads()
+    s=1
+    do while(s<blockDim%x)
+       if(mod(tid,2*s)==1)then
+          ! s=1 tid == 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16
+          ! s=2 tid == 1,  3,  5,  7,  9,   11,   13,   15
+          ! s=4 tid == 1,      5,      9,         13
+          ! s=8 tid == 1,              9,
+          !     tid == 1
+          s_x(tid) = s_x(tid)+s_x(tid+s)
+       endif
+       call syncthreads()
+       s = s*2
+    enddo
+    if (tid == 1)g_o(1) = s_x(1)
+  end subroutine sum_correct
+  
+end module cuda_kernel
+
+program main
+  use cuda_kernel
+  implicit none
+  real(4)::tbgn,tend
+  integer:: i
+  integer, parameter:: ishow=16
+  integer, parameter:: SIZE=64
+  
+  real(8),dimension(SIZE):: datah
+  real(8),dimension(SIZE),device:: datad
+  real(8),dimension(1):: sumh
+  real(8),dimension(1),device:: sumd
+  
+  integer :: istat
+  integer :: blocks,threads
+
+  blocks=1
+  threads=SIZE
+  
+  write(6,*) "GPU:\n"
+
+  istat= cudaSetDevice(0)
+  
+  do i=1, SIZE
+     datah(i) = i
+  enddo
+  write(6,*,advance='no')"data: "
+  do i=1,ishow
+     write(6,"(1x,f8.2)",advance='no') datah(i)
+  enddo
+  write(6,*) ""
+  
+  sumh(1) =0.0d0
+  istat= cudaMemcpy(datad, datah, SIZE)
+  istat= cudaMemcpy( sumd,  sumh,    1)
+  istat= cudaDeviceSynchronize()
+  call sum_wrong <<< blocks,threads>>>(datad,sumd)
+  istat= cudaMemcpy( sumh,  sumd,    1)
+
+  write(6,*,advance='no')"Numerical result(1): "
+  write(6,"(1x,f8.2)") sumh(1)
+
+  
+  sumh(1) =0.0d0
+  istat= cudaMemcpy( sumd,  sumh,    1)
+  istat= cudaDeviceSynchronize()
+  call sum_correct <<< blocks,threads>>>(datad,sumd,SIZE)
+  istat= cudaMemcpy( sumh,  sumd,    1)
+
+  write(6,*,advance='no')"Numerical result(2): "
+  write(6,"(1x,f8.2)") sumh(1)
+ 
+  sumh(1) = SIZE*(SIZE+1)/2
+  write(6,*,advance='no')"Analytic     result: "
+  write(6,"(1x,f8.2)") sumh(1)
+ 
+end program
