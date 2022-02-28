@@ -29,7 +29,6 @@ See the code for [CPU](./sample2.cpp) and [GPU](./sample2.cu).
 How to compile and run the sample codes is shown as follows.
 
 	cd cpp
-	module load cuda-toolkit/11.0
 	make
 	sbatch pbs_sample2.sh
 	cat sample2.cpulog
@@ -61,7 +60,6 @@ See the code for [CPU](./sample3.cpp) and [GPU](./sample3.cu).
 How to compile and run the sample codes is shown as follows.
 
 	cd cpp
-	module load cuda-toolkit/11.0
 	make
 	sbatch pbs_sample3.sh
 	cat sample3.cpulog
@@ -92,7 +90,6 @@ See the code for [CPU](./sample4.cpp) and [GPU](./sample4.cu). This code impleme
 How to compile and run the sample codes is shown as follows.
 
 	cd cpp
-	module load cuda-toolkit/11.0
 	make
 	sbatch pbs_sample4.sh
 	cat sample4.cpulog
