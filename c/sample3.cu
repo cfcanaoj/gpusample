@@ -181,7 +181,7 @@ void GetGravitationalPotential(){
 void OutputData(){
   int  i,j;
   static FILE *fp;
-  const char filename[30]="xy-cpu.dat";
+  const char filename[30]="xy-gpu.dat";
   fp=fopen(filename,"w");
   for(j=1;j<nx2-1;j++){
   for(i=1;i<nx1-1;i++){
