@@ -12,7 +12,6 @@ See the code for [CPU](./sample1.cpp) and [GPU](./sample1.cu).
 How to compile and run the sample codes is shown as follows.
 
 	cd cpp
-	module load cuda-toolkit/11.0
 	make
 	qsub pbs_sample1.sh
 	cat sample1.cpulog
