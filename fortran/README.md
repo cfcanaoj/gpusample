@@ -14,7 +14,7 @@ How to compile and run the sample codes is shown as follows.
 	cd fortran
 	module load nvhpc
 	make
-	qsub pbs_sample1.sh
+	sbatch pbs_sample1.sh
 	cat sample1.cpulog
 	cat sample1.gpulog
 	
@@ -31,7 +31,7 @@ How to compile and run the sample codes is shown as follows.
 	cd fortran
 	module load nvhpc
 	make
-	qsub pbs_sample2.sh
+	sbatch pbs_sample2.sh
 	cat sample2.cpulog
 	cat sample2.gpulog
 	
@@ -62,7 +62,7 @@ How to compile and run the sample codes is shown as follows.
 	cd fortran
 	module load nvhpc
 	make
-	qsub pbs_sample3.sh
+	sbatch pbs_sample3.sh
 	cat sample3.cpulog
 	cat sample3.gpulog
 	
@@ -92,7 +92,7 @@ How to compile and run the sample codes is shown as follows.
 	cd fortran
 	module load nvhpc
 	make
-	qsub pbs_sample4.sh
+	sbatch pbs_sample4.sh
 	cat sample4.cpulog
 	cat sample4.gpulog
 	
