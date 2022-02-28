@@ -71,8 +71,8 @@ Check the gravitational potential by gnuplot. Follow the instruction in the anal
 	
 	cd /gwork0/<username>/gpusample/cpp
 	gnuplot
-	plot "xy-gpu.dat" u 1:2:4 w l
-	plot "xy-cpu.dat" u 1:2:4 w l
+	splot "xy-gpu.dat" u 1:2:4 w l
+	splot "xy-cpu.dat" u 1:2:4 w l
 	
 
 ### References
