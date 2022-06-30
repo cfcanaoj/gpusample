@@ -7,7 +7,7 @@ C_i=A_i+B_i
 \end{align*}
 ](https://render.githubusercontent.com/render/math?math=%5Clarge+%5Cdisplaystyle+%5Cbegin%7Balign%2A%7D%0AC_i%3DA_i%2BB_i%0A%5Cend%7Balign%2A%7D%0A%0A)
 
-See the code for [CPU](./sample1.f90) and [GPU](./sample1.cuf).
+See the code for [CPU](./sample1.f90) and [GPU](./sample1.f90).
 
 How to compile and run the sample codes is shown as follows.
 
@@ -24,7 +24,7 @@ How to compile and run the sample codes is shown as follows.
 ## Sample2
 This example shows how GPU calculates fast. The calculation is basically the same as the sample1.
 
-See the code for [CPU](./sample2.f90) and [GPU](./sample2.cuf).
+See the code for [CPU](./sample2.f90) and [GPU](./sample2.f90).
 
 How to compile and run the sample codes is shown as follows.
 
@@ -55,7 +55,7 @@ In the method, the gravitational potential is obtained by the following iterativ
 \end{align*}
 ](https://render.githubusercontent.com/render/math?math=%5Cdisplaystyle+%5Cbegin%7Balign%2A%7D%0A%5CPhi%5E%7Bn%2B1%7D_%7Bi%2Cj%7D%3D%0A%5Cleft%28%0A++%5CPhi%5E%7Bn%7D_%7Bi%2B1%2Cj%7D%2B%5CPhi%5E%7Bn%7D_%7Bi-1%2Cj%7D%0A%2B%5CPhi%5E%7Bn%7D_%7Bi%2Cj%2B1%7D%2B%5CPhi%5E%7Bn%7D_%7Bi%2Cj-1%7D%0A-4%5Cpi+G+%5Crho_%7Bi%2Cj%7Dh%5E2%0A%5Cright%29%2F4%0A%5Cend%7Balign%2A%7D%0A)
 
-See the code for [CPU](./sample3.f90) and [GPU](./sample3.cuf).
+See the code for [CPU](./sample3.f90) and [GPU](./sample3.f90).
 
 How to compile and run the sample codes is shown as follows.
 	
@@ -85,7 +85,7 @@ S=\sum_i^N a_i
 \end{align*}
 ](https://render.githubusercontent.com/render/math?math=%5Cdisplaystyle+%5Cbegin%7Balign%2A%7D%0AS%3D%5Csum_i%5EN+a_i%0A%5Cend%7Balign%2A%7D%0A)
 	
-See the code for [CPU](./sample4.f90) and [GPU](./sample4.cuf). This code implementation is the simplest and slowest one, so if you want to use faster code, see the references.
+See the code for [CPU](./sample4.f90) and [GPU](./sample4.f90). This code implementation is the simplest and slowest one, so if you want to use faster code, see the references.
 	
 How to compile and run the sample codes is shown as follows.
 
