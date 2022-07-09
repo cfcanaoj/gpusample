@@ -13,4 +13,4 @@ Download this at the login node of CfCA server.
 - [Samples using CUDA in Fortran with MPI](./fortran_mpi/README.md)
 
 # Refererences
-- [CfCA GPU trial](https://www.cfca.nao.ac.jp/gpgpu)
+- [CfCA GPU Cluster](https://www.cfca.nao.ac.jp/gpgpu)
